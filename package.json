@@ -1,0 +1,19 @@
+{
+  "name": "apprentisage-nodjs",
+  "version": "1.0.0",
+  "description": "Ce cours me permet d'avoir les base en js et de creer mon premier api",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Abdoul karim DIALLO",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.19"
+  }
+}

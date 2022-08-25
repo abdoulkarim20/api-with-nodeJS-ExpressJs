@@ -2,7 +2,7 @@ const express=require('express'); //permet de recuperer la dependance express
 const morgan=require('morgan');
 const favicon=require('serve-favicon');
 let pokemons=require('./mock-pokemon');
-const {success}=require('./helper.js');
+const {success, getUniqueId}=require('./helper.js');
 const app=express();
 const port=3000;
 /*creation d'un middlewere
@@ -25,7 +25,7 @@ app.get('/api/pokemons',(req,res)=>{
     res.json(success(message,pokemons));
 })
 
-app.get('/api/pokemon/:id',(req,res)=>{
+app.get('/api/pokemons/:id',(req,res)=>{
     const id=parseInt(req.params.id);
     const pokemon=pokemons.find(pokemon=>pokemon.id===id);
     // res.send(`vous avez demander le pokemon dont le nom est ${pokemon.name}`) //recuperation dans url avec param dynamique
@@ -35,8 +35,12 @@ app.get('/api/pokemon/:id',(req,res)=>{
 });
 
 /*La methode pour faire le post*/
-app.post('/api/pokemons',(req,post)=>{
-    
+app.post('/api/pokemons',(req,res)=>{
+    const id=getUniqueId(pokemons);
+    const pokemonCreated={...req.body,...{id:id,created:new Date()}}
+    pokemons.push(pokemonCreated);
+    const message=`Le pokemon ${pokemonCreated.name} a ete creer avec success`;
+    res.json(success(message,pokemonCreated));
 })
 
 app.listen(port,()=>console.log(`notre application node est demarer sur le port: http://localhost:${port}`));

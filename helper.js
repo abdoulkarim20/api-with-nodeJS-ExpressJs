@@ -12,10 +12,11 @@ const success=(message,data)=>{
 }
 module.exports=success;
 */
-/*La generation d'un id unique*/
+/*La generation d'un id unique
+Cette fonction permet de comparer les id des pokemon et retourner le plus grand et incrementer de 1 cette id*/
 exports.getUniqueId=(pokemons)=>{
-    const pokemonsIds=pokemons.map(pokemon  > pokemon.id)
-    const maxId=pokemonsIds.reduce((a,b)=>Math.max(a,b))
-    const uniqueId=maxId
+    const pokemonsIds=pokemons.map(pokemon => pokemon.id);
+    const maxId=pokemonsIds.reduce((a,b) => Math.max(a,b));  
+    const uniqueId=maxId + 1;
     return uniqueId;
 }

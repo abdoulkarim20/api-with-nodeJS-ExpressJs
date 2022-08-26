@@ -35,7 +35,19 @@ sequelize.authenticate()
 
 const pokemon=pokemonModel(sequelize,DataTypes)
 sequelize.sync({force:true})
-    .then(_=>console.log('la base de donnees pokedex a ete syschroniser'));
+    .then(_=>{
+        console.log('la base de donnees a ete syncrhoniser')
+        pokemons.map(p=>{
+            pokemon.create({
+                name:p.name,
+                hp:p.hp,
+                cp:p.cp,
+                picture:p.picture,
+                types: p.types.join()
+            }).then(data=>console.log(data.toJSON()))//nous avons utilise toJSON car il est recommander par sequelize pour afficher correctement les donnees des instances d'un models
+        })
+        
+    })
 
 app
     .use(favicon(__dirname + '/favicon.ico'))

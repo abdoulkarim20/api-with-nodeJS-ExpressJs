@@ -2,7 +2,9 @@ const express=require('express'); //permet de recuperer la dependance express
 const morgan=require('morgan');// c'est un middlewere nous permet logger les message avec 
 const favicon=require('serve-favicon');//le lien de favicon depuis le chemin
 const bodyParser=require('body-parser');//permet de transformer une chaine en json
+const {Sequelize,DataTypes}=require('sequelize');//importation de sequelize
 let pokemons=require('./mock-pokemon'); //la liste des pokemon
+const pokemonModel=require('./src/models/pokemon');
 const {success, getUniqueId}=require('./helper.js');
 const app=express();
 const port=3000;
@@ -14,6 +16,26 @@ app.use((req,res,nex)=>{
 peur etre remplacer par 
 app.use(morgan('dev'));
 */
+
+const sequelize=new Sequelize(
+    'pokedex',
+    'root',
+    'Fooly@1251',
+    {
+        host:'localhost',
+        dialect:'mariadb',
+        dialectOptions:{
+            timezone:'Etc/GMT-2'},
+        logging : false
+    },
+)
+sequelize.authenticate()
+    .then(_=>console.log('la connexion reussi'))
+    .catch(error=>console.error('connexion echouer',error))
+
+const pokemon=pokemonModel(sequelize,DataTypes)
+sequelize.sync({force:true})
+    .then(_=>console.log('la base de donnees pokedex a ete syschroniser'));
 
 app
     .use(favicon(__dirname + '/favicon.ico'))

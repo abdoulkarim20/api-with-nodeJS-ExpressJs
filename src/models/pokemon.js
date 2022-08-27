@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       types: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        set(types){
+          this.setDataValue('types',types.join())
+        },
+        get(){
+          return this.getDataValue('types').split(',')
+        }
       }
     }, {
       timestamps: true,

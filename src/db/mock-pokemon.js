@@ -108,5 +108,4 @@ const pokemons = [
      created: new Date()
     }
    ];
-     
    module.exports = pokemons

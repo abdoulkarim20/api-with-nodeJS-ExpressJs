@@ -7,14 +7,26 @@ module.exports=(app)=>{
         })
         .then(_=>{
             /*je recupere le pokemon pour lui afficher qu'il est modifier*/
-            pokemon.findByPk(id)
+            return pokemon.findByPk(id)
             .then(data=>{
+                if(data===null){
+                    const message=`Le pokemon avec id ${data.id} n'existe pas`;
+                    return res.status(404).json({message})
+                }
                 const message=`le pokemon ${data.name} a ete modifier`;
                 res.json({message,pokemon:data});
             })
-            .catch((error)=>{
-                console.log(error);
+            /* puisque nous avons deux catch et que le premier retourne fais un retourn
+            si il contient une erreur il va directement etre transferer dans le dernier catch
+            .catch(error=>{
+                const message=`Le pokemon n'a pas pu etre modifier, Reessayer dans quelques instants.`;
+                res.status(500).json({message,error})
             })
+            */
+        })
+        .catch(error=>{
+            const message=`Le pokemon n'a pas pu etre modifier, Reessayer dans quelques instants.`;
+            res.status(500).json({message,error})
         })
     })
 }

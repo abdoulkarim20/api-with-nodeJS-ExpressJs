@@ -6,7 +6,10 @@ module.exports=(app)=>{
             let message=`le pokemon creer est ${req.body.name}`;
             res.json({message,data})
         })
-        .catch(error=>console.log(error))
+        .catch(error=>{
+            const message=`Le pokemon n'a pas pu etre ajouter, Reessayer dans quelques instants.`;
+            res.status(500).json({message,error})
+        })
     })
 
 }

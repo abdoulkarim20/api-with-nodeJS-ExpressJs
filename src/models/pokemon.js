@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true
       },
       name: {
+        unique:{
+          message:`le nom doit etre unique`
+        },
         type: DataTypes.STRING,
         allowNull: false,
-        unique:{
-          msg:`le pokemon existe deja`
-        },
         validate:{
           notEmpty:{msg:'le champs nom ne doit pas etre vide'},
           notNull:{msg:'le chams nom est une propriete requise'}
